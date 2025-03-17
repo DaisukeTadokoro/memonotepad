@@ -3,63 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>シンプルメモ帳</title>
+    <title>メモ帳</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            display: flex;
             margin: 0;
-            padding: 20px;
-            background-color: #f4f4f9;
+            padding: 0;
         }
-        h1 {
+
+        /* 左側のサイドバー */
+        .sidebar {
+            width: 250px;
+            background-color: #f4f4f9;
+            padding: 20px;
+            height: 100vh;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
             text-align: center;
         }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 10px 0;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #333;
+            font-size: 18px;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #ddd;
+        }
+
+        /* 右側のコンテンツ */
+        .content {
+            flex: 1;
+            padding: 20px;
+            display: none;
+        }
+
+        .content h2 {
+            font-size: 24px;
+            margin-top: 0;
+        }
+
         textarea {
             width: 100%;
-            height: 80vh;
+            height: 60vh;
             border: 1px solid #ccc;
             padding: 10px;
             font-size: 16px;
             border-radius: 4px;
             box-sizing: border-box;
         }
-        button {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 18px;
-            margin-top: 10px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
     </style>
 </head>
 <body>
-    <h1>自分だけのメモ帳</h1>
-    <textarea id="memo" placeholder="ここにメモを入力してください"></textarea>
-    <button onclick="saveMemo()">メモを保存</button>
+    <!-- 左側のメニュー -->
+    <div class="sidebar">
+        <h2>メモ帳リスト</h2>
+        <ul>
+            <li><a href="javascript:void(0)" onclick="showMemo('memo1')">メモ 1</a></li>
+            <li><a href="javascript:void(0)" onclick="showMemo('memo2')">メモ 2</a></li>
+            <li><a href="javascript:void(0)" onclick="showMemo('memo3')">メモ 3</a></li>
+            <li><a href="javascript:void(0)" onclick="showMemo('memo4')">メモ 4</a></li>
+        </ul>
+    </div>
+
+    <!-- 右側のコンテンツ（メモ帳） -->
+    <div id="memo1" class="content">
+        <h2>メモ 1</h2>
+        <textarea placeholder="ここにメモを入力してください..."></textarea>
+    </div>
+    <div id="memo2" class="content">
+        <h2>メモ 2</h2>
+        <textarea placeholder="ここにメモを入力してください..."></textarea>
+    </div>
+    <div id="memo3" class="content">
+        <h2>メモ 3</h2>
+        <textarea placeholder="ここにメモを入力してください..."></textarea>
+    </div>
+    <div id="memo4" class="content">
+        <h2>メモ 4</h2>
+        <textarea placeholder="ここにメモを入力してください..."></textarea>
+    </div>
 
     <script>
-        // ページ読み込み時に保存したメモを表示
-        window.onload = function() {
-            const savedMemo = localStorage.getItem('memo');
-            if (savedMemo) {
-                document.getElementById('memo').value = savedMemo;
-            }
+        // メモを表示する関数
+        function showMemo(memoId) {
+            // すべてのメモを非表示にする
+            const memos = document.querySelectorAll('.content');
+            memos.forEach(memo => memo.style.display = 'none');
+
+            // クリックされたメモを表示
+            const selectedMemo = document.getElementById(memoId);
+            selectedMemo.style.display = 'block';
         }
 
-        // メモを保存する関数
-        function saveMemo() {
-            const memoContent = document.getElementById('memo').value;
-            localStorage.setItem('memo', memoContent);
-            alert('メモが保存されました');
-        }
+        // 最初に表示されるメモを設定
+        showMemo('memo1');
     </script>
 </body>
 </html>
